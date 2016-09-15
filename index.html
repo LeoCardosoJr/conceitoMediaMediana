@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>Calcular Conceito, media e mediana</title>
+
+<script language="javascript">
+
+function pegar_valores_calcula(qtd){
+
+	var num = new Array(qtd);
+	var i, media, conceito, mediana, text;
+	
+	for(i = 1; i <= qtd; i++){
+	
+		num[i] = document.getElementById("num"+i).value;
+		
+	}
+	
+	media    = calcula_media(qtd,num);
+	
+	conceito = calcula_conceito(media);
+	
+	mediana  = calcula_mediana(num);
+	
+	
+	text = 'A média é: '+ media +'<br />O conceito é: '+ conceito +'<br />A mediana é: '+ mediana +'<br />	';
+	
+	document.getElementById("resultado").innerHTML = text;
+}
+
+function gerar_campos(){
+
+	var qtd = document.getElementById("dec").value;
+	var i = 1;
+	var text = null;
+
+	text = 'Numero '+ i + ' <input type ="text" name="num'+ i +'" id="num'+ i +'" value="0.00" /><br><br>';
+	
+	for(i = 2; i <= qtd; i++){
+		text += 'Numero '+ i + ' <input type ="text" name="num'+ i +'" id="num'+ i +'" value="0.00" /><br><br>';
+	}
+	
+	text += '<input type="button" value="Calcular" onclick="javascript:pegar_valores_calcula('+qtd+');"/><br>';
+	
+	
+	document.getElementById("campos").innerHTML = text;
+
+}
+
+function calcula_media(qtd,num){
+
+	var i = 0, media = 0;
+	
+	for(i = 1; i <= qtd; i++){
+	
+		media = parseFloat(media) + parseFloat(num[i]);
+
+	}
+
+	media = media / qtd;
+	
+	return media;
+	
+}
+
+function calcula_conceito(media){
+
+	var i = 0, conceito = 0;
+	
+	if(media >= 9) conceito = "A";
+	else if(media >= 7.5 && media < 9.0) conceito = "B";
+	else if(media >= 6.0 && media < 7.5) conceito = "C";
+	else if(media >= 4.0 && media < 6.0) conceito = "D";
+	else if(media < 4.0) conceito = "E";
+	
+	return conceito;
+	
+}
+
+function calcula_mediana(num){
+	var int_div; // inteiro da divisão
+
+	num.sort();
+	
+	// Caso a divisão da quantidade de elementos da mediana seja um número não inteiro, o mesmo será arredondado para baixo
+	int_div = Math.floor(num.length/2);
+	
+	if(num.length % 2){
+	
+		return num[int_div];
+		
+	}else{
+		
+		return (parseFloat(num[int_div - 1]) + parseFloat(num[int_div - 1]))/2;
+		
+	}
+	
+}
+
+</script>
+</head>
+<body align="center">
+<h1>Calcular Conceito, media e mediana</h1>
+Quantos números decimais você deseja calcular?<br />
+<input type ="text" name="dec" id="dec" /><br>
+
+<br><input type="button" value="Gerar campos" onclick="javascript:gerar_campos();"/><br>
+<p id="campos">
+
+</p>
+<p id="resultado">
+
+</p>
+
+</body>
+</html> 
